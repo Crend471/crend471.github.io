@@ -129,6 +129,5 @@ CHARGES: ${charges}
 CHARGE COST: $${chargeCost.toFixed(2)}
 
 DRIVER COST: $${driver.toFixed(2)}
-AMOUNT NEEDED: $${result.amountNeeded.toFixed(2)}
-PROFIT BUFFER: $${result.profitAmount.toFixed(2)}`;
+AMOUNT NEEDED: $${result.amountNeeded.toFixed(2)}`;
 }
