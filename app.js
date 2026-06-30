@@ -120,7 +120,7 @@ async function run() {
   const result = profitAmountNeeded(driver);
 
  document.getElementById("output").textContent =
-`Home → Pickup: ${milesPickup.toFixed(2)} miles
+    `Home → Pickup: ${milesPickup.toFixed(2)} miles
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
@@ -129,5 +129,6 @@ CHARGES: ${charges}
 CHARGE COST: $${chargeCost.toFixed(2)}
 
 DRIVER COST: $${driver.toFixed(2)}
-AMOUNT NEEDED: $${result.amountNeeded.toFixed(2)}`;
+AMOUNT NEEDED: $${result.amountNeeded.toFixed(2)}
+PROFIT BUFFER: $${result.profitAmount.toFixed(2)}`;
 }
