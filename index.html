@@ -2,16 +2,14 @@
 <html>
 <head>
 <style>
-  * {
-    box-sizing: border-box;
-  }
-
   body {
     margin: 0;
     min-height: 100vh;
+
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; 
+    align-items: center;      
+
     font-family: Arial, sans-serif;
     background: #f4f4f4;
   }
@@ -19,6 +17,12 @@
   .container {
     width: 90%;
     max-width: 400px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
     padding: 20px;
     background: white;
     border-radius: 12px;
@@ -26,32 +30,24 @@
     text-align: center;
   }
 
-  input {
+  input, button {
     width: 100%;
     padding: 10px;
-    margin: 6px 0;
-    border: 1px solid #ccc;
     border-radius: 6px;
+  }
+
+  input {
+    border: 1px solid #ccc;
   }
 
   button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
     border: none;
-    border-radius: 6px;
     background: #007bff;
     color: white;
-    font-size: 16px;
     cursor: pointer;
   }
 
-  button:hover {
-    background: #0056b3;
-  }
-
   pre {
-    margin-top: 15px;
     text-align: left;
     white-space: pre-wrap;
   }
