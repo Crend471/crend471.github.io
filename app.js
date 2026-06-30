@@ -80,7 +80,7 @@ function driverCost(chargeCost, miles) {
 
   const mileCost = costPerMile(miles);
 
-  const rate = confirm("Apply $26 per hour rate?");
+  const rate = document.getElementById("hourlyRate").checked;
 
   if (rate) {
     return chargeCost + (hours * 26) + 26;
