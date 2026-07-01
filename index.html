@@ -1,77 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Current Courier - Delivery Calculator</title>
+
 <style>
-  body {
-    margin: 0;
-    min-height: 100vh;
+body{
+    margin:0;
+    min-height:100vh;
+    background:rgb(24,57,33);
+    color:white;
+    font-family:Monospace,sans-serif;
 
-    display: flex;
-    justify-content: center; 
-    align-items: center;      
-    color: white;
-    font-family: Monospace, sans-serif;
-    background: rgb(24,57,33);
-  }
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-  .container {
-    width: 90%;
-    max-width: 400px;
+.wrapper{
+    width:95%;
+    max-width:1200px;
+}
 
-    display: flex;
-    flex-direction: column;
+h1{
+    text-align:center;
+    margin-bottom:30px;
+}
 
-    gap: 10px;
-    border: 2px solid black;
-    padding: 20px;
-    background: rgb(24,57,33);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    text-align: center;
-  }
+.container{
+    display:flex;
+    gap:30px;
+}
 
-  input, button {
-    width: 97%;
-    padding: 10px;
-    border-radius: 5px;
-  }
+.left-box,
+.right-box{
+    border:2px solid black;
+    border-radius:12px;
+    padding:20px;
+    background:rgb(24,57,33);
+    box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
 
-  input {
-    border: 1px solid #ccc;
-  }
+.left-box{
+    width:350px;
+}
 
-  button {
-    border: none;
-    background: #007bff;
-    color: white;
-    cursor: pointer;
-  }
+.right-box{
+    flex:1;
+}
 
-  pre {
-    text-align: left;
-    white-space: pre-wrap;
-  }
+input,
+button{
+    width:100%;
+    padding:10px;
+    margin-bottom:15px;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+button{
+    border:none;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+pre{
+    white-space:pre-wrap;
+    font-size:18px;
+}
+
+/* Mobile */
+@media(max-width:800px){
+
+.container{
+    flex-direction:column;
+}
+
+.left-box{
+    width:auto;
+}
+
+}
 </style>
-  <title>Current Courier- Delivery Calculator</title>
 </head>
-<body background: rgb(24,57,33)>
+
+<body>
+
+<div class="wrapper">
+
+<h1>Current Courier - Delivery Calculator</h1>
+
 <div class="container">
-<h2>Current Courier- Delivery Calculator </h2>
 
-<input id="driver" placeholder="Driver location"><br><br>
-<input id="pickup" placeholder="Pickup location"><br><br>
-<input id="dropoff" placeholder="Dropoff location"><br><br>
+    <div class="left-box">
 
-<label>
-<input type="checkbox" id="hourlyRate">
-  Apply $26 per hour rate?
-</label>
-<br></br>
-  
-<button onclick="run()">Calculate</button>
+        <input id="driver" placeholder="Driver location">
 
-<pre id="output"></pre>
+        <input id="pickup" placeholder="Pickup location">
+
+        <input id="dropoff" placeholder="Dropoff location">
+
+        <label>
+            <input type="checkbox" id="hourlyRate">
+            Apply $26 per hour rate?
+        </label>
+
+        <br><br>
+
+        <button onclick="run()">Calculate</button>
+
+    </div>
+
+    <div class="right-box">
+
+        <h2>Results</h2>
+
+        <pre id="output"></pre>
+
+    </div>
+
+</div>
+
+</div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
