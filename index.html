@@ -4,7 +4,6 @@
 <title>Current Courier - Delivery Calculator</title>
 
 <style>
-
 body{
     margin:0;
     min-height:100vh;
@@ -13,18 +12,40 @@ body{
     font-family:Monospace,sans-serif;
 
     display:flex;
-    justify-content:flex-start; 
-    align-items:flex-end;        
-    position: relative;
-    padding:20px; 
+    justify-content:flex-start;
+    align-items:flex-end;
+
+    padding:20px;
     padding-bottom:60px;
+
+    position:relative; /* IMPORTANT for top-left text */
 }
 
+/* ✅ TOP LEFT TITLE */
+.top-left-title{
+    position:absolute;
+    top:20px;
+    left:20px;
+}
+
+.top-left-title .title{
+    font-size:40px;     /* BIG TITLE */
+    font-weight:bold;
+}
+
+.top-left-title .subtitle{
+    font-size:16px;
+    opacity:0.8;
+    margin-top:5px;
+}
+
+/* WRAPPER */
 .wrapper{
     width:95%;
     max-width:1200px;
 }
 
+/* BOX LAYOUT */
 h1{
     text-align:center;
     margin-bottom:30px;
@@ -73,7 +94,7 @@ pre{
     font-size:18px;
 }
 
-/* Mobile */
+/* MOBILE */
 @media(max-width:800px){
 
 .container{
@@ -84,37 +105,17 @@ pre{
 .left-box,
 .right-box{
     width:100%;
-    padding:25px;   
-}
-
-h1{
-    font-size:28px;
+    padding:25px;
 }
 
 input,
 button{
-    font-size:18px;   
-    padding:14px;     
+    font-size:18px;
+    padding:14px;
 }
 
 pre{
-    font-size:20px;  
-}
-.top-left-title{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    text-align: left;
-}
-
-.title{
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.subtitle{
-    font-size: 14px;
-    opacity: 0.8;
+    font-size:20px;
 }
 
 }
@@ -122,14 +123,16 @@ pre{
 </head>
 
 <body>
+
+<!-- ✅ TOP LEFT HEADER -->
 <div class="top-left-title">
     <div class="title">Current Courier</div>
     <div class="subtitle">Current Courier’s Load Pricing Calculator</div>
 </div>
-    
+
 <div class="wrapper">
 
-<h1>Current Courier - Delivery Calculator</h1>
+<h1>Delivery Calculator</h1>
 
 <div class="container">
 
