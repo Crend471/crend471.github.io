@@ -2,10 +2,12 @@
 function setupGeocoder(inputId, dropdownId, storeCallback) {
   const input = document.getElementById(inputId);
   const dropdown = document.getElementById(dropdownId);
-  console.log("typing:", inputId, query);
+  
   let timer;
 
   input.addEventListener("input", () => {
+     const query = input.value.trim();
+    console.log("typing:", inputId, query);
     clearTimeout(timer);
 
     const query = input.value.trim();
@@ -165,15 +167,17 @@ setupGeocoder("dropoff", "dropoffLocationDropdown", (data) => {
 async function run() {
   const driverLocation = document.getElementById("driver").value;
 
-  if (!pickupCoords || !dropoffCoords) {
-    alert("Please select both pickup and dropoff locations from dropdown.");
+  const driverCoords = await geocode(driverLocation);
+
+  if (!pickupCoords || !dropoffCoords || !driverCoords) {
+    alert("Please select all locations properly.");
     return;
   }
 
   const milesPickup = await getDrivingDistance(driverCoords, pickupCoords);
   const milesTo = await getDrivingDistance(pickupCoords, dropoffCoords);
   const milesBack = await getDrivingDistance(dropoffCoords, driverCoords);
-  
+
   const totalMiles = getTotal(milesTo, milesBack, milesPickup);
 
   const charges = chargeCount(totalMiles);
@@ -194,4 +198,4 @@ CHARGE COST: $${chargeCost.toFixed(2)}
 
 DRIVER COST: $${driver.toFixed(2)}
 AMOUNT NEEDED: $${result.amountNeeded.toFixed(2)}`;
-
+}
