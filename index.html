@@ -4,6 +4,38 @@
 <title>Current Courier - Delivery Calculator</title>
 
 <style>
+    .city-search{
+    position:relative;
+    margin-bottom:15px;
+}
+
+.geocoder-dropdown{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+
+    background:white;
+    color:black;
+
+    border:1px solid #ccc;
+    border-radius:0 0 6px 6px;
+
+    max-height:200px;
+    overflow-y:auto;
+
+    display:none;
+    z-index:1000;
+}
+
+.geocoder-item{
+    padding:10px;
+    cursor:pointer;
+}
+
+.geocoder-item:hover{
+    background:#f0f0f0;
+}
 body{
     margin:0;
     min-height:100vh;
@@ -138,15 +170,23 @@ pre{
 
     <div class="left-box">
 
-        <label for "driver">Starting Location:</label>
+        <label for= "driver">Starting Location:</label>
         <select name="driver" id="driver">
             <option value="Round Lake, IL">Round Lake</option>
             <option value="Oswego, IL">Oswego</option>
         </select>
+        
+        <div class="city-search">
+            <label>Pickup</label>
+            <input id="pickup" type="text" placeholder="Pickup location" autocomplet="off">
+            <div id="pickupLocationDropdown" class="geocoder-dropdown"></div>
+        </div>
+        <div class="city-search">
+            <label>Dropoff</label>
+            <input id="dropoff" type="text" placeholder="Dropoff location" autocomplete="off">
+            <div id="dropoffLocationDropdown" class="geocoder-dropdown"></div>
+        </div>
 
-        <input id="pickup" placeholder="Pickup location">
-
-        <input id="dropoff" placeholder="Dropoff location">
 
         <label>
             <input type="checkbox" id="hourlyRate">
