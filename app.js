@@ -175,9 +175,20 @@ async function run() {
     return;
   }
 
-  const milesPickup = await getDrivingDistance(driverCoords, pickupCoords);
-  const milesTo = await getDrivingDistance(pickupCoords, dropoffCoords);
-  const milesBack = await getDrivingDistance(dropoffCoords, driverCoords);
+  const milesPickup = await getDrivingDistance(
+  driverCoords,
+  pickupCoords
+);
+
+const milesTo = await getDrivingDistance(
+  pickupCoords,
+  dropoffCoords
+);
+
+const milesBack = await getDrivingDistance(
+  dropoffCoords,
+  driverCoords
+);
 
   const totalMiles = getTotal(milesTo, milesBack, milesPickup);
 
