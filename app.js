@@ -83,21 +83,6 @@ async function getDrivingDistance(start, end) {
   const meters = response.routes[0].distance;
   return meters * 0.000621371;
 }
-
-  // if (!startLoc || !endLoc) {
-  //   throw new Error("Could not find one of the locations.");
-  // }
-
-  // const url =
-  //   `https://router.project-osrm.org/route/v1/driving/` +
-  //   `${startLoc.lon},${startLoc.lat};${endLoc.lon},${endLoc.lat}?overview=false`;
-
-  // const response = await fetch(url).then(r => r.json());
-
-  // const meters = response.routes[0].distance;
-  // return meters * 0.000621371; // meters → miles
-
-
 // ===== YOUR ORIGINAL LOGIC =====
 
 function getTotal(milesTo, milesBack, milesPickup) {
