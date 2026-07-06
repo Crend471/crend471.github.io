@@ -174,17 +174,13 @@ async function run() {
   const driverLocation = document.getElementById("driver").value;
 
   if (!pickupCoords || !dropoffCoords) {
-    alert("Please select both pickup and dropoff locations from the dropdown.");
+    alert("Please select both pickup and dropoff locations from dropdown.");
     return;
   }
 
   const milesPickup = await getDrivingDistance(driverLocation, pickupCoords.name);
   const milesTo = await getDrivingDistance(pickupCoords.name, dropoffCoords.name);
   const milesBack = await getDrivingDistance(dropoffCoords.name, driverLocation);
-
-  const milesPickup = await getDrivingDistance(driverLocation, pickupLocation);
-  const milesTo = await getDrivingDistance(pickupLocation, deliveryLocation);
-  const milesBack = await getDrivingDistance(deliveryLocation, driverLocation);
 
   const totalMiles = getTotal(milesTo, milesBack, milesPickup);
 
@@ -195,8 +191,8 @@ async function run() {
 
   const result = profitAmountNeeded(driver);
 
- document.getElementById("output").textContent =
-    `Home → Pickup: ${milesPickup.toFixed(2)} miles
+  document.getElementById("output").textContent =
+`Home → Pickup: ${milesPickup.toFixed(2)} miles
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
@@ -206,4 +202,5 @@ CHARGE COST: $${chargeCost.toFixed(2)}
 
 DRIVER COST: $${driver.toFixed(2)}
 AMOUNT NEEDED: $${result.amountNeeded.toFixed(2)}`;
+}
 }
