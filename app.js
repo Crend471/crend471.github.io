@@ -204,10 +204,10 @@ const milesBack = await getDrivingDistance(
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
-TOTAL MILES: ${totalMiles.toFixed(2)}
-CHARGES: ${charges}
-CHARGE COST: $${chargeCost.toFixed(2)}
+Total Miles: ${totalMiles.toFixed(2)}
+Charges : ${charges}
+Charge Costs : $${chargeCost.toFixed(2)}
 
-DRIVER COST: $${driver.toFixed(2)}
-AMOUNT NEEDED: $${result.amountNeeded.toFixed(2)}`;
+Driver Costs: $${driver.toFixed(2)}
+Minimum: $${result.amountNeeded.toFixed(2)}`;
 }
