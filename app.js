@@ -1,5 +1,8 @@
 // ===== GEOCODING + ROUTING =====
+console.log("JS LOADED");
 function setupGeocoder(inputId, dropdownId, storeCallback) {
+  console.log("geocoder running:", inputId);
+  
   const input = document.getElementById(inputId);
   const dropdown = document.getElementById(dropdownId);
   
