@@ -2,7 +2,7 @@
 function setupGeocoder(inputId, dropdownId, storeCallback) {
   const input = document.getElementById(inputId);
   const dropdown = document.getElementById(dropdownId);
-
+  console.log("typing:", inputId, query);
   let timer;
 
   input.addEventListener("input", () => {
@@ -61,21 +61,28 @@ function setupGeocoder(inputId, dropdownId, storeCallback) {
 let pickupCoords = null;
 let dropoffCoords = null;
 
-async function geocode(location) {
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
-  const data = await fetch(url).then(r => r.json());
+// async function geocode(location) {
+//   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
+//   const data = await fetch(url).then(r => r.json());
 
-  if (!data[0]) return null;
+//   if (!data[0]) return null;
 
-  return {
-    lat: parseFloat(data[0].lat),
-    lon: parseFloat(data[0].lon)
-  };
-}
+//   return {
+//     lat: parseFloat(data[0].lat),
+//     lon: parseFloat(data[0].lon)
+//   };
+// }
 
 async function getDrivingDistance(start, end) {
-  const startLoc = await geocode(start);
-  const endLoc = await geocode(end);
+  const url =
+    `https://router.project-osrm.org/route/v1/driving/` +
+    `${start.lon},${start.lat};${end.lon},${end.lat}?overview=false`;
+
+  const response = await fetch(url).then(r => r.json());
+
+  const meters = response.routes[0].distance;
+  return meters * 0.000621371;
+}
 
   if (!startLoc || !endLoc) {
     throw new Error("Could not find one of the locations.");
@@ -171,17 +178,17 @@ setupGeocoder("dropoff", "dropoffLocationDropdown", (data) => {
 // ===== MAIN FUNCTION =====
 
 async function run() {
-  const driverLocation = document.getElementById("driver").value;
+  const driverCoords = await geocode(driverLocation);
 
   if (!pickupCoords || !dropoffCoords) {
     alert("Please select both pickup and dropoff locations from dropdown.");
     return;
   }
 
-  const milesPickup = await getDrivingDistance(driverLocation, pickupCoords.name);
-  const milesTo = await getDrivingDistance(pickupCoords.name, dropoffCoords.name);
-  const milesBack = await getDrivingDistance(dropoffCoords.name, driverLocation);
-
+  const milesPickup = await getDrivingDistance(driverCoords, pickupCoords);
+  const milesTo = await getDrivingDistance(pickupCoords, dropoffCoords);
+  const milesBack = await getDrivingDistance(dropoffCoords, driverCoords);
+  
   const totalMiles = getTotal(milesTo, milesBack, milesPickup);
 
   const charges = chargeCount(totalMiles);
@@ -202,5 +209,4 @@ CHARGE COST: $${chargeCost.toFixed(2)}
 
 DRIVER COST: $${driver.toFixed(2)}
 AMOUNT NEEDED: $${result.amountNeeded.toFixed(2)}`;
-}
 }
