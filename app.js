@@ -1,4 +1,66 @@
 // ===== GEOCODING + ROUTING =====
+function setupGeocoder(inputId, dropdownId, storeCallback) {
+  const input = document.getElementById(inputId);
+  const dropdown = document.getElementById(dropdownId);
+
+  let timer;
+
+  input.addEventListener("input", () => {
+    clearTimeout(timer);
+
+    const query = input.value.trim();
+
+    if (query.length < 3) {
+      dropdown.style.display = "none";
+      return;
+    }
+
+    timer = setTimeout(async () => {
+      const url =
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      dropdown.innerHTML = "";
+
+      if (!data.length) {
+        dropdown.style.display = "none";
+        return;
+      }
+
+      data.forEach(place => {
+        const div = document.createElement("div");
+        div.className = "geocoder-item";
+        div.textContent = place.display_name;
+
+        div.onclick = () => {
+          input.value = place.display_name;
+          dropdown.style.display = "none";
+
+          storeCallback({
+            lat: parseFloat(place.lat),
+            lon: parseFloat(place.lon),
+            name: place.display_name
+          });
+        };
+
+        dropdown.appendChild(div);
+      });
+
+      dropdown.style.display = "block";
+    }, 400);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+}
+let pickupCoords = null;
+let dropoffCoords = null;
+
 async function geocode(location) {
   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
   const data = await fetch(url).then(r => r.json());
@@ -98,13 +160,27 @@ function profitAmountNeeded(driver) {
 
   return { amountNeeded, profitAmount };
 }
+setupGeocoder("pickup", "pickupLocationDropdown", (data) => {
+  pickupCoords = data;
+});
+
+setupGeocoder("dropoff", "dropoffLocationDropdown", (data) => {
+  dropoffCoords = data;
+});
 
 // ===== MAIN FUNCTION =====
 
 async function run() {
   const driverLocation = document.getElementById("driver").value;
-  const pickupLocation = document.getElementById("pickup").value;
-  const deliveryLocation = document.getElementById("dropoff").value;
+
+  if (!pickupCoords || !dropoffCoords) {
+    alert("Please select both pickup and dropoff locations from the dropdown.");
+    return;
+  }
+
+  const milesPickup = await getDrivingDistance(driverLocation, pickupCoords.name);
+  const milesTo = await getDrivingDistance(pickupCoords.name, dropoffCoords.name);
+  const milesBack = await getDrivingDistance(dropoffCoords.name, driverLocation);
 
   const milesPickup = await getDrivingDistance(driverLocation, pickupLocation);
   const milesTo = await getDrivingDistance(pickupLocation, deliveryLocation);
