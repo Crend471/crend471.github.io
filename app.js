@@ -61,17 +61,17 @@ function setupGeocoder(inputId, dropdownId, storeCallback) {
 let pickupCoords = null;
 let dropoffCoords = null;
 
-// async function geocode(location) {
-//   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
-//   const data = await fetch(url).then(r => r.json());
+async function geocode(location) {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
+  const data = await fetch(url).then(r => r.json());
 
-//   if (!data[0]) return null;
+  if (!data[0]) return null;
 
-//   return {
-//     lat: parseFloat(data[0].lat),
-//     lon: parseFloat(data[0].lon)
-//   };
-// }
+  return {
+    lat: parseFloat(data[0].lat),
+    lon: parseFloat(data[0].lon)
+  };
+}
 
 async function getDrivingDistance(start, end) {
   const url =
@@ -84,18 +84,18 @@ async function getDrivingDistance(start, end) {
   return meters * 0.000621371;
 }
 
-  if (!startLoc || !endLoc) {
-    throw new Error("Could not find one of the locations.");
-  }
+  // if (!startLoc || !endLoc) {
+  //   throw new Error("Could not find one of the locations.");
+  // }
 
-  const url =
-    `https://router.project-osrm.org/route/v1/driving/` +
-    `${startLoc.lon},${startLoc.lat};${endLoc.lon},${endLoc.lat}?overview=false`;
+  // const url =
+  //   `https://router.project-osrm.org/route/v1/driving/` +
+  //   `${startLoc.lon},${startLoc.lat};${endLoc.lon},${endLoc.lat}?overview=false`;
 
-  const response = await fetch(url).then(r => r.json());
+  // const response = await fetch(url).then(r => r.json());
 
-  const meters = response.routes[0].distance;
-  return meters * 0.000621371; // meters → miles
+  // const meters = response.routes[0].distance;
+  // return meters * 0.000621371; // meters → miles
 }
 
 // ===== YOUR ORIGINAL LOGIC =====
@@ -178,7 +178,7 @@ setupGeocoder("dropoff", "dropoffLocationDropdown", (data) => {
 // ===== MAIN FUNCTION =====
 
 async function run() {
-  const driverCoords = await geocode(driverLocation);
+  const driverLocation = document.getElementById("driver").value;
 
   if (!pickupCoords || !dropoffCoords) {
     alert("Please select both pickup and dropoff locations from dropdown.");
