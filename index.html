@@ -6,7 +6,7 @@
 <style>
     .city-search{
     position:relative;
-    margin-bottom:15px;
+    z-index:10;
 }
 
 .geocoder-dropdown{
@@ -178,7 +178,7 @@ pre{
         
         <div class="city-search">
             <label>Pickup</label>
-            <input id="pickup" type="text" placeholder="Pickup location" autocomplet="off">
+            <input id="pickup" type="text" placeholder="Pickup location" autocomplete="off">
             <div id="pickupLocationDropdown" class="geocoder-dropdown"></div>
         </div>
         <div class="city-search">
