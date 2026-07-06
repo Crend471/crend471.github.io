@@ -4,55 +4,53 @@ function setupGeocoder(inputId, dropdownId, storeCallback) {
   const dropdown = document.getElementById(dropdownId);
   
   let timer;
+ input.addEventListener("input", () => {
+  clearTimeout(timer);
 
-  input.addEventListener("input", () => {
-     const query = input.value.trim();
-    console.log("typing:", inputId, query);
-    clearTimeout(timer);
+  const query = input.value.trim();
+  console.log("typing:", inputId, query);
 
-    const query = input.value.trim();
+  if (query.length < 3) {
+    dropdown.style.display = "none";
+    return;
+  }
 
-    if (query.length < 3) {
+  timer = setTimeout(async () => {
+    const url =
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    dropdown.innerHTML = "";
+
+    if (!data.length) {
       dropdown.style.display = "none";
       return;
     }
 
-    timer = setTimeout(async () => {
-      const url =
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`;
+    data.forEach(place => {
+      const div = document.createElement("div");
+      div.className = "geocoder-item";
+      div.textContent = place.display_name;
 
-      const res = await fetch(url);
-      const data = await res.json();
-
-      dropdown.innerHTML = "";
-
-      if (!data.length) {
+      div.onclick = () => {
+        input.value = place.display_name;
         dropdown.style.display = "none";
-        return;
-      }
 
-      data.forEach(place => {
-        const div = document.createElement("div");
-        div.className = "geocoder-item";
-        div.textContent = place.display_name;
+        storeCallback({
+          lat: parseFloat(place.lat),
+          lon: parseFloat(place.lon),
+          name: place.display_name
+        });
+      };
 
-        div.onclick = () => {
-          input.value = place.display_name;
-          dropdown.style.display = "none";
+      dropdown.appendChild(div);
+    });
 
-          storeCallback({
-            lat: parseFloat(place.lat),
-            lon: parseFloat(place.lon),
-            name: place.display_name
-          });
-        };
-
-        dropdown.appendChild(div);
-      });
-
-      dropdown.style.display = "block";
-    }, 400);
-  });
+    dropdown.style.display = "block";
+  }, 400);
+});
 
   document.addEventListener("click", (e) => {
     if (!input.contains(e.target) && !dropdown.contains(e.target)) {
