@@ -96,7 +96,7 @@ async function getDrivingDistance(start, end) {
 
   // const meters = response.routes[0].distance;
   // return meters * 0.000621371; // meters → miles
-}
+
 
 // ===== YOUR ORIGINAL LOGIC =====
 
