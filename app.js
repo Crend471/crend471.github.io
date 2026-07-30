@@ -86,10 +86,10 @@ async function getDrivingDistance(start, end) {
   const meters = response.routes[0].distance;
   return meters * 0.000621371;
 }
-// ===== YOUR ORIGINAL LOGIC =====
+// methods
 
 function getTotal(milesTo, milesBack, milesPickup) {
-  return milesTo + milesBack + milesPickup;
+  return milesTo + milesPickup;
 }
 
 function chargeCount(miles) {
@@ -101,7 +101,7 @@ function chargeCount(miles) {
 }
 
 function costForCharge(charges) {
-  const rateForCharge = 25;
+  const rateForCharge = 50;
   if (charges === 0) return 0;
   return rateForCharge * charges;
 }
