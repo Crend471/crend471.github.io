@@ -205,10 +205,10 @@ Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
 1 Dollar Per Mile: ${milesTo*1}
-1.5 Dollars Per Mile: ${milesTo*1.5}
+1.5 Dollars Per Mile: ${(milesTo*1.5).toFixed(2)}
 2 Dollars Per Mile: ${milesTo*2}
 
-Total Miles: ${totalMiles.toFixed(2)}
+Total Miles: ${(totalMiles+milesBack).toFixed(2)}
 Charges : ${charges}
 Charge Costs : $${chargeCost.toFixed(2)}
 
