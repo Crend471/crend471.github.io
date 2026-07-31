@@ -204,9 +204,9 @@ const milesBack = await getDrivingDistance(
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
-1 Dollar Per Mile: ${round(milesTo*1)}
-1.5 Dollars Per Mile: ${round(milesTo*1.5)}
-2 Dollars Per Mile: ${round(milesTo*2)}
+1 Dollar Per Mile: ${(milesTo * 1).toFixed(2)}
+1.5 Dollars Per Mile: ${(milesTo * 1.5).toFixed(2)}
+2 Dollars Per Mile: ${(milesTo * 2).toFixed(2)}
 
 Total Miles: ${totalMiles.toFixed(2)}
 Charges : ${charges}
