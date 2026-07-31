@@ -89,7 +89,7 @@ async function getDrivingDistance(start, end) {
 // methods
 
 function getTotal(milesTo, milesBack, milesPickup) {
-  return milesTo + milesPickup;
+  return milesTo + milesPickup+milesBack;
 }
 
 function chargeCount(miles) {
@@ -132,19 +132,17 @@ function totalTime(miles, charges) {
 }
 
 function driverCost(chargeCost, miles) {
-  const charges = chargeCount(miles);
-  const hours = totalTime(miles, charges);
+    const charges = chargeCount(miles);
+    const hours = totalTime(miles, charges);
 
-  const mileCost = costPerMile(miles);
+    const rateElement = document.getElementById("hourlyRate");
+    const rate = rateElement ? rateElement.checked : false;
 
-  const rateElement = document.getElementById("hourlyRate");
-  const rate = rateElement ? rateElement.checked : false;
-
-  if (rate) {
-    return chargeCost + (hours * 26) + 26;
-  } else {
-    return chargeCost + 26;
-  }
+    if (rate) {
+        return chargeCost + (hours * 26) + 26;
+    } else {
+        return chargeCost + 26;
+    }
 }
 
 function profitAmountNeeded(driver) {
@@ -189,14 +187,16 @@ const milesBack = await getDrivingDistance(
   dropoffCoords,
   driverCoords
 );
-
-  const totalMiles = getTotal(milesTo, milesBack, milesPickup);
-
+  const billableMiles = milesPickup + milesTo;
+  
+  const totalMiles = billableMiles + milesBack;  
+  
   const charges = chargeCount(totalMiles);
+
   const chargeCost = costForCharge(charges);
 
-  const driver = driverCost(chargeCost, totalMiles);
-
+  const driver = driverCost(chargeCost, billableMiles);
+  
   const result = profitAmountNeeded(driver);
 
   document.getElementById("output").textContent =
@@ -204,11 +204,11 @@ const milesBack = await getDrivingDistance(
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
-1 Dollar Per Mile: ${milesTo*1}
-1.5 Dollars Per Mile: ${(milesTo*1.5).toFixed(2)}
-2 Dollars Per Mile: ${milesTo*2}
+1 Dollar Per Mile: ${round(milesTo*1)}
+1.5 Dollars Per Mile: ${round(milesTo*1.5)}
+2 Dollars Per Mile: ${round(milesTo*2)}
 
-Total Miles: ${(totalMiles+milesBack).toFixed(2)}
+Total Miles: ${totalMiles.toFixed(2)}
 Charges : ${charges}
 Charge Costs : $${chargeCost.toFixed(2)}
 
