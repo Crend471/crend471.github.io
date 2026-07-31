@@ -190,7 +190,7 @@ dropoffCoords,
 driverCoords
 );
 
-const totalMiles = getTotal(milesTo, milesBack, milesPickup);
+const totalMiles = getTotal(milesTo, milesBack, milesPickup) + milesBack;
 
 const charges = chargeCount(totalMiles);
 const chargeCost = costForCharge(charges);
@@ -202,7 +202,7 @@ const dollarRate=milesTo*1;
 const dollarHalfRate=milesTo*1.5;
 const twoDollarRate=milesTo*2;
 
-totalMiles=totalMiles+milesBack
+
 document.getElementById("output").textContent =
 `Home → Pickup: ${milesPickup.toFixed(2)} miles
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
