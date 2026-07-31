@@ -214,4 +214,4 @@ Charge Costs : $${chargeCost.toFixed(2)}
 
 Driver Costs: $${driver.toFixed(2)}
 Minimum: $${result.amountNeeded.toFixed(2)}`;
-}
+
