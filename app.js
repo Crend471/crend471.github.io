@@ -208,9 +208,9 @@ document.getElementById("output").textContent =
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
-1 Dollar Per Mile: ${dollarRate.toFixed(2)}
-1.5 Dollars Per Mile: ${dollarHalfRate.toFixed(2)}
-2 Dollars Per Mile: ${twoDollarRate.toFixed(2)}
+1 Dollar Per Mile: $${dollarRate.toFixed(2)}
+1.5 Dollars Per Mile: $${dollarHalfRate.toFixed(2)}
+2 Dollars Per Mile: $${twoDollarRate.toFixed(2)}
 
 Total Miles: ${totalMiles.toFixed(2)}
 Charges : ${charges}
