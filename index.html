@@ -4,7 +4,8 @@
 <title>Current Courier - Delivery Calculator</title>
 
 <style>
-    .city-search{
+
+.city-search{
     position:relative;
 }
 
@@ -35,11 +36,15 @@
 .geocoder-item:hover{
     background:#f0f0f0;
 }
+
+
 body{
     margin:0;
     min-height:100vh;
+
     background:rgb(24,57,33);
     color:white;
+
     font-family:Monospace,sans-serif;
 
     display:flex;
@@ -52,52 +57,51 @@ body{
     position:relative;
 }
 
+
 /* TOP LEFT TITLE */
 .top-left-title{
     position:absolute;
     top:20px;
     left:20px;
+
+    max-width:45%;
+    z-index:2;
 }
-#top-right-image{
-    position:absolute;
-    top: 20px;
-    right: 20px;
-   
-}
-#top-right-image img{
-    width: 600px;
-    height: auto;
-}
-    
-     /* BIG TITLE */
 .top-left-title .title{
     font-size:40px;
     font-weight:bold;
 }
-
 .top-left-title .subtitle{
     font-size:16px;
     opacity:0.8;
     margin-top:5px;
 }
-
-/* WRAPPER */
+#top-right-image{
+    position:absolute;
+    top:20px;
+    right:20px;
+    width:35%;
+    max-width:400px;
+    z-index:1;
+}
+#top-right-image img{
+    width:100%;
+    height:auto;
+    display:block;
+}
 .wrapper{
     width:95%;
     max-width:1200px;
+    margin-top:180px;
 }
-
-/* BOX LAYOUT */
 h1{
     text-align:center;
     margin-bottom:30px;
 }
-
 .container{
     display:flex;
     gap:30px;
 }
-
 .left-box,
 .right-box{
     border:2px solid black;
@@ -106,124 +110,147 @@ h1{
     background:rgb(24,57,33);
     box-shadow:0 4px 15px rgba(0,0,0,.2);
 }
-
 .left-box{
     width:350px;
 }
-
 .right-box{
     flex:1;
 }
-
 input,
-button{
+button,
+select{
     width:100%;
     padding:10px;
     margin-bottom:15px;
     border-radius:5px;
     box-sizing:border-box;
 }
-
 button{
     border:none;
     background:#007bff;
     color:white;
     cursor:pointer;
 }
-
 pre{
     white-space:pre-wrap;
     font-size:18px;
 }
-
 /* MOBILE */
 @media(max-width:800px){
-
-.container{
-    flex-direction:column;
-    gap:20px;
-}
-
-.left-box,
-.right-box{
-    width:100%;
-    padding:25px;
-}
-
-input,
-button{
-    font-size:18px;
-    padding:14px;
-}
-
-pre{
-    font-size:20px;
-}
-
+    .top-left-title{
+        max-width:55%;
+    }
+    .top-left-title .title{
+        font-size:30px;
+    }
+    #top-right-image{
+        width:30%;
+        right:10px;
+        top:20px;
+    }
+    .wrapper{
+        margin-top:150px;
+    }
+    .container{
+        flex-direction:column;
+        gap:20px;
+    }
+    .left-box,
+    .right-box{
+        width:100%;
+        padding:25px;
+    }
+    input,
+    button,
+    select{
+        font-size:18px;
+        padding:14px;
+    }
+    pre{
+        font-size:20px;
+    }
 }
 </style>
 </head>
-
 <body>
-
-<!-- ✅ TOP LEFT HEADER -->
+<!-- TOP LEFT HEADER -->
 <div class="top-left-title">
-    <div class="title">Current Courier</div>
-    <div class="subtitle">Current Courier’s Load Pricing Calculator</div>
+    <div class="title">
+        Current Courier
+    </div>
+    <div class="subtitle">
+        Current Courier’s Load Pricing Calculator
+    </div>
 </div>
-<div id ="top-right-image">
-    <img src="van.png" alt="CurrentCurrierVanDeisgn" width="128" height="128">
+<!-- TOP RIGHT IMAGE -->
+<div id="top-right-image">
+    <img src="van.png" alt="Current Courier Van">
 </div>
 <div class="wrapper">
-
-<h1>Delivery Calculator</h1>
-
+<h1>
+    Delivery Calculator
+</h1>
 <div class="container">
-
-    <div class="left-box">
-
-        <label for= "driver">Starting Location:</label>
-        <select name="driver" id="driver">
-            <option value="Round Lake, IL">Round Lake</option>
-            <option value="Oswego, IL">Oswego</option>
-        </select>
-        
-        <div class="city-search">
-            <label>Pickup</label>
-            <input id="pickup" type="text" placeholder="Pickup location" autocomplete="off">
-            <div id="pickupLocationDropdown" class="geocoder-dropdown"></div>
-        </div>
-        <div class="city-search">
-            <label>Dropoff</label>
-            <input id="dropoff" type="text" placeholder="Dropoff location" autocomplete="off">
-            <div id="dropoffLocationDropdown" class="geocoder-dropdown"></div>
-        </div>
-
-
-        <label>
-            <input type="checkbox" id="hourlyRate">
-            Apply $26 per hour rate?
-        </label>
-
-        <br><br>
-
-        <button onclick="run()">Calculate</button>
-
-    </div>
-
-    <div class="right-box">
-
-        <h2>Results</h2>
-
-        <pre id="output"></pre>
-
-    </div>
-
+<div class="left-box">
+<label for="driver">
+Starting Location:
+</label>
+<select id="driver">
+<option value="Round Lake, IL">
+Round Lake
+</option>
+<option value="Oswego, IL">
+Oswego
+</option>
+</select>
+<div class="city-search">
+<label>
+Pickup
+</label>
+<input 
+id="pickup"
+type="text"
+placeholder="Pickup location"
+autocomplete="off">
+<div 
+id="pickupLocationDropdown"
+class="geocoder-dropdown">
 </div>
-
 </div>
-
+<div class="city-search">
+<label>
+Dropoff
+</label>
+<input 
+id="dropoff"
+type="text"
+placeholder="Dropoff location"
+autocomplete="off">
+<div 
+id="dropoffLocationDropdown"
+class="geocoder-dropdown">
+</div>
+</div>
+<label>
+<input type="checkbox" id="hourlyRate">
+Apply $26 per hour rate?
+</label>
+<br><br>
+<button onclick="run()">
+Calculate
+</button>
+</div>
+<div class="right-box">
+<h2>
+Results
+</h2>
+<pre id="output"></pre>
+</div>
+</div>
+</div>
 <script src="app.js"></script>
 
+
 </body>
+
 </html>
