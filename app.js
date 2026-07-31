@@ -204,7 +204,7 @@ document.getElementById("output").textContent =
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
-1 Dollar Per Mile: ${milesTo*1}
+1 Dollar Per Mile: ${(milesTo*1).toFixed(1)}
 1.5 Dollars Per Mile: ${milesTo*1.5}
 2 Dollars Per Mile: ${milesTo*2}
 
