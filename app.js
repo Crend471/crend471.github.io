@@ -1,212 +1,212 @@
 // ===== GEOCODING + ROUTING =====
 console.log("JS LOADED");
 function setupGeocoder(inputId, dropdownId, storeCallback) {
-  console.log("geocoder running:", inputId);
-  
-  const input = document.getElementById(inputId);
-  const dropdown = document.getElementById(dropdownId);
-  
-  let timer;
- input.addEventListener("input", () => {
-  clearTimeout(timer);
+console.log("geocoder running:", inputId);
 
-  const query = input.value.trim();
-  console.log("typing:", inputId, query);
+const input = document.getElementById(inputId);
+const dropdown = document.getElementById(dropdownId);
 
-  if (query.length < 3) {
-    dropdown.style.display = "none";
-    return;
-  }
+let timer;
+input.addEventListener("input", () => {
+clearTimeout(timer);
 
-  timer = setTimeout(async () => {
-    const url =
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`;
+const query = input.value.trim();
+console.log("typing:", inputId, query);
 
-    const res = await fetch(url);
-    const data = await res.json();
+if (query.length < 3) {
+dropdown.style.display = "none";
+return;
+}
 
-    dropdown.innerHTML = "";
+timer = setTimeout(async () => {
+const url =
+`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`;
 
-    if (!data.length) {
-      dropdown.style.display = "none";
-      return;
-    }
+const res = await fetch(url);
+const data = await res.json();
 
-    data.forEach(place => {
-      const div = document.createElement("div");
-      div.className = "geocoder-item";
-      div.textContent = place.display_name;
+dropdown.innerHTML = "";
 
-      div.onclick = () => {
-        input.value = place.display_name;
-        dropdown.style.display = "none";
+if (!data.length) {
+dropdown.style.display = "none";
+return;
+}
 
-        storeCallback({
-          lat: parseFloat(place.lat),
-          lon: parseFloat(place.lon),
-          name: place.display_name
-        });
-      };
+data.forEach(place => {
+const div = document.createElement("div");
+div.className = "geocoder-item";
+div.textContent = place.display_name;
 
-      dropdown.appendChild(div);
-    });
+div.onclick = () => {
+input.value = place.display_name;
+dropdown.style.display = "none";
 
-    dropdown.style.display = "block";
-  }, 400);
+storeCallback({
+lat: parseFloat(place.lat),
+lon: parseFloat(place.lon),
+name: place.display_name
+});
+};
+
+dropdown.appendChild(div);
 });
 
-  document.addEventListener("click", (e) => {
-    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
-      dropdown.style.display = "none";
-    }
-  });
+dropdown.style.display = "block";
+}, 400);
+});
+
+document.addEventListener("click", (e) => {
+if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+dropdown.style.display = "none";
+}
+});
 }
 let pickupCoords = null;
 let dropoffCoords = null;
 
 async function geocode(location) {
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
-  const data = await fetch(url).then(r => r.json());
+const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
+const data = await fetch(url).then(r => r.json());
 
-  if (!data[0]) return null;
+if (!data[0]) return null;
 
-  return {
-    lat: parseFloat(data[0].lat),
-    lon: parseFloat(data[0].lon)
-  };
+return {
+lat: parseFloat(data[0].lat),
+lon: parseFloat(data[0].lon)
+};
 }
 
 async function getDrivingDistance(start, end) {
-  const url =
-    `https://router.project-osrm.org/route/v1/driving/` +
-    `${start.lon},${start.lat};${end.lon},${end.lat}?overview=false`;
+const url =
+`https://router.project-osrm.org/route/v1/driving/` +
+`${start.lon},${start.lat};${end.lon},${end.lat}?overview=false`;
 
-  const response = await fetch(url).then(r => r.json());
+const response = await fetch(url).then(r => r.json());
 
-  const meters = response.routes[0].distance;
-  return meters * 0.000621371;
+const meters = response.routes[0].distance;
+return meters * 0.000621371;
 }
 // methods
 
 function getTotal(milesTo, milesBack, milesPickup) {
-  return milesTo + milesPickup+milesBack;
+return milesTo + milesPickup;
 }
 
 function chargeCount(miles) {
-  let count = 0;
-  for (let i = 180; i < 1000; i += 180) {
-    if (miles > i) count++;
-  }
-  return count;
+let count = 0;
+for (let i = 180; i < 1000; i += 180) {
+if (miles > i) count++;
+}
+return count;
 }
 
 function costForCharge(charges) {
-  const rateForCharge = 50;
-  if (charges === 0) return 0;
-  return rateForCharge * charges;
+const rateForCharge = 50;
+if (charges === 0) return 0;
+return rateForCharge * charges;
 }
 
 function costPerMile(miles) {
-  return miles * 1.50;
+return miles * 1.50;
 }
 
 function timeOnTheRoad(miles) {
-  const averageSpeed = 65;
-  return miles / averageSpeed;
+const averageSpeed = 65;
+return miles / averageSpeed;
 }
 
 function chargeTime(charges) {
-  const chargeTimeEstimate = 45;
+const chargeTimeEstimate = 45;
 
-  if (charges === 0) return 0;
+if (charges === 0) return 0;
 
-  return (charges * chargeTimeEstimate) / 60;
+return (charges * chargeTimeEstimate) / 60;
 }
 
 function totalTime(miles, charges) {
-  const loadUnload = 2;
-  const road = timeOnTheRoad(miles);
-  const charge = chargeTime(charges);
+const loadUnload = 2;
+const road = timeOnTheRoad(miles);
+const charge = chargeTime(charges);
 
-  return road + loadUnload + charge;
+return road + loadUnload + charge;
 }
 
 function driverCost(chargeCost, miles) {
-    const charges = chargeCount(miles);
-    const hours = totalTime(miles, charges);
+const charges = chargeCount(miles);
+const hours = totalTime(miles, charges);
 
-    const rateElement = document.getElementById("hourlyRate");
-    const rate = rateElement ? rateElement.checked : false;
+const mileCost = costPerMile(miles);
 
-    if (rate) {
-        return chargeCost + (hours * 26) + 26;
-    } else {
-        return chargeCost + 26;
-    }
+const rateElement = document.getElementById("hourlyRate");
+const rate = rateElement ? rateElement.checked : false;
+
+if (rate) {
+return chargeCost + (hours * 26) + 26;
+} else {
+return chargeCost + 26;
+}
 }
 
 function profitAmountNeeded(driver) {
-  const minProfit = 70;
+const minProfit = 70;
 
-  const amountNeeded = driver + minProfit;
-  const profitAmount = amountNeeded - driver;
+const amountNeeded = driver + minProfit;
+const profitAmount = amountNeeded - driver;
 
-  return { amountNeeded, profitAmount };
+return { amountNeeded, profitAmount };
 }
 setupGeocoder("pickup", "pickupLocationDropdown", (data) => {
-  pickupCoords = data;
+pickupCoords = data;
 });
 
 setupGeocoder("dropoff", "dropoffLocationDropdown", (data) => {
-  dropoffCoords = data;
+dropoffCoords = data;
 });
 
 // ===== MAIN FUNCTION =====
 
 async function run() {
-  const driverLocation = document.getElementById("driver").value;
+const driverLocation = document.getElementById("driver").value;
 
-  const driverCoords = await geocode(driverLocation);
+const driverCoords = await geocode(driverLocation);
 
-  if (!pickupCoords || !dropoffCoords || !driverCoords) {
-    alert("Please select all locations properly.");
-    return;
-  }
+if (!pickupCoords || !dropoffCoords || !driverCoords) {
+alert("Please select all locations properly.");
+return;
+}
 
-  const milesPickup = await getDrivingDistance(
-  driverCoords,
-  pickupCoords
+const milesPickup = await getDrivingDistance(
+driverCoords,
+pickupCoords
 );
 
 const milesTo = await getDrivingDistance(
-  pickupCoords,
-  dropoffCoords
+pickupCoords,
+dropoffCoords
 );
 
 const milesBack = await getDrivingDistance(
-  dropoffCoords,
-  driverCoords
+dropoffCoords,
+driverCoords
 );
-  const billableMiles = milesPickup + milesTo;
-  
-  const totalMiles = billableMiles + milesBack;  
-  
-  const charges = chargeCount(totalMiles);
 
-  const chargeCost = costForCharge(charges);
+const totalMiles = getTotal(milesTo, milesBack, milesPickup);
 
-  const driver = driverCost(chargeCost, billableMiles);
-  
-  const result = profitAmountNeeded(driver);
+const charges = chargeCount(totalMiles);
+const chargeCost = costForCharge(charges);
 
-  document.getElementById("output").textContent =
+const driver = driverCost(chargeCost, totalMiles);
+
+const result = profitAmountNeeded(driver);
+
+document.getElementById("output").textContent =
 `Home → Pickup: ${milesPickup.toFixed(2)} miles
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
 
-1 Dollar Per Mile: ${(milesTo * 1).toFixed(2)}
-1.5 Dollars Per Mile: ${(milesTo * 1.5).toFixed(2)}
-2 Dollars Per Mile: ${(milesTo * 2).toFixed(2)}
+1 Dollar Per Mile: ${milesTo*1}
+1.5 Dollars Per Mile: ${milesTo*1.5}
+2 Dollars Per Mile: ${milesTo*2}
 
 Total Miles: ${totalMiles.toFixed(2)}
 Charges : ${charges}
