@@ -197,7 +197,7 @@ const chargeCost = costForCharge(charges);
 
 const driver = driverCost(chargeCost, totalMiles);
 const totalCosts= chargeCost+driver
-const result = profitAmuntNeeded(totalCosts);
+const result = profitAmountNeeded(totalCosts);
 
 const noReturnMiles=totalMiles-milesBack
 const dollarRate=noReturnMiles*1;
