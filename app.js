@@ -132,19 +132,19 @@ return road + loadUnload + charge;
 }
 
 function driverCost(chargeCost, miles) {
-const charges = chargeCount(miles);
-const hours = totalTime(miles, charges);
+  const charges = chargeCount(miles);
+  const hours = totalTime(miles, charges);
 
-const mileCost = costPerMile(miles);
+  const mileCost = costPerMile(miles);
 
-const rateElement = document.getElementById("hourlyRate");
-const rate = rateElement ? rateElement.checked : false;
+  const rateElement = document.getElementById("hourlyRate");
+  const rate = rateElement ? rateElement.checked : false;
 
-if (rate) {
-return chargeCost + (hours * 26) + 26;
-} else {
-return chargeCost + 26;
-}
+  if (rate) {
+  return  (hours * 26) + 26;
+  } else {
+  return chargeCost + 26;
+  }
 }
 
 function profitAmountNeeded(driver) {
@@ -198,10 +198,11 @@ const chargeCost = costForCharge(charges);
 const driver = driverCost(chargeCost, totalMiles);
 
 const result = profitAmountNeeded(driver);
-const dollarRate=milesTo*1;
-const dollarHalfRate=milesTo*1.5;
-const twoDollarRate=milesTo*2;
+const dollarRate=totalMiles*1;
+const dollarHalfRate=totalMiles*1.5;
+const twoDollarRate=totalMiles*2;
 
+const totalCosts= chargeCost+dirver
 
 document.getElementById("output").textContent =
 `Home → Pickup: ${milesPickup.toFixed(2)} miles
@@ -217,5 +218,6 @@ Charges : ${charges}
 Charge Costs : $${chargeCost.toFixed(2)}
 
 Driver Costs: $${driver.toFixed(2)}
+Total Costs: $${totalCosts.toFixed(2)}
 Minimum: $${result.amountNeeded.toFixed(2)}`;
 }
