@@ -196,28 +196,31 @@ const charges = chargeCount(totalMiles);
 const chargeCost = costForCharge(charges);
 
 const driver = driverCost(chargeCost, totalMiles);
-
-const result = profitAmountNeeded(driver);
-const dollarRate=totalMiles*1;
-const dollarHalfRate=totalMiles*1.5;
-const twoDollarRate=totalMiles*2;
-
 const totalCosts= chargeCost+driver
+const result = profitAmuntNeeded(totalCosts);
+
+const noReturnMiles=totalMiles-milesBack
+const dollarRate=noReturnMiles*1;
+const dollarHalfRate=noReturnMiles*1.5;
+const twoDollarRate=noReturnMiles*2;
+
+
 
 document.getElementById("output").textContent =
 `Home → Pickup: ${milesPickup.toFixed(2)} miles
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
+Total Miles: ${totalMiles.toFixed(2)}
 
 1 Dollar Per Mile: $${dollarRate.toFixed(2)}
 1.5 Dollars Per Mile: $${dollarHalfRate.toFixed(2)}
 2 Dollars Per Mile: $${twoDollarRate.toFixed(2)}
 
-Total Miles: ${totalMiles.toFixed(2)}
 Charges : ${charges}
 Charge Costs : $${chargeCost.toFixed(2)}
 
 Driver Costs: $${driver.toFixed(2)}
 Total Costs: $${totalCosts.toFixed(2)}
+
 Minimum: $${result.amountNeeded.toFixed(2)}`;
 }
