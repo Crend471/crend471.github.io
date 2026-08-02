@@ -202,7 +202,7 @@ const dollarRate=totalMiles*1;
 const dollarHalfRate=totalMiles*1.5;
 const twoDollarRate=totalMiles*2;
 
-const totalCosts= chargeCost+dirver
+const totalCosts= chargeCost+driver
 
 document.getElementById("output").textContent =
 `Home → Pickup: ${milesPickup.toFixed(2)} miles
