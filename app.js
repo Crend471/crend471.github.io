@@ -210,16 +210,17 @@ document.getElementById("output").textContent =
 `Home → Pickup: ${milesPickup.toFixed(2)} miles
 Pickup → Delivery: ${milesTo.toFixed(2)} miles
 Delivery → Home: ${milesBack.toFixed(2)} miles
-Total Miles: ${totalMiles.toFixed(2)}
+Total Miles: ${totalMiles.toFixed(2)} miles
 
+Miles Without Return: ${noReturnMiles.toFixed(2)} miles
 1 Dollar Per Mile: $${dollarRate.toFixed(2)}
 1.5 Dollars Per Mile: $${dollarHalfRate.toFixed(2)}
 2 Dollars Per Mile: $${twoDollarRate.toFixed(2)}
 
 Charges : ${charges}
 Charge Costs : $${chargeCost.toFixed(2)}
-
 Driver Costs: $${driver.toFixed(2)}
+
 Total Costs: $${totalCosts.toFixed(2)}
 
 Minimum: $${result.amountNeeded.toFixed(2)}`;
