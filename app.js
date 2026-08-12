@@ -190,13 +190,15 @@ dropoffCoords,
 driverCoords
 );
   
+
+
+const totalMiles = getTotal(milesTo, milesBack, milesPickup) + milesBack;
+  
 const noReturnMiles=totalMiles-milesBack;
 const dollarRate=noReturnMiles*1;
 const dollarHalfRate=noReturnMiles*1.5;
 const twoDollarRate=noReturnMiles*2;
-
-const totalMiles = getTotal(milesTo, milesBack, milesPickup) + milesBack;
-
+  
 const charges = chargeCount(totalMiles);
 const chargeCost = costForCharge(charges);
 
