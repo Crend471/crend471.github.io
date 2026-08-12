@@ -189,20 +189,22 @@ const milesBack = await getDrivingDistance(
 dropoffCoords,
 driverCoords
 );
+  
+const noReturnMiles=totalMiles-milesBack;
+const dollarRate=noReturnMiles*1;
+const dollarHalfRate=noReturnMiles*1.5;
+const twoDollarRate=noReturnMiles*2;
 
 const totalMiles = getTotal(milesTo, milesBack, milesPickup) + milesBack;
 
 const charges = chargeCount(totalMiles);
 const chargeCost = costForCharge(charges);
 
-const driver = driverCost(chargeCost, totalMiles);
+const driver = driverCost(chargeCost, noReturnMiles);
 const totalCosts= chargeCost+driver
 const result = profitAmountNeeded(totalCosts);
 
-const noReturnMiles=totalMiles-milesBack
-const dollarRate=noReturnMiles*1;
-const dollarHalfRate=noReturnMiles*1.5;
-const twoDollarRate=noReturnMiles*2;
+
 
 
 
