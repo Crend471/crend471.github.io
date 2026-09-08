@@ -124,7 +124,7 @@ return (charges * chargeTimeEstimate) / 60;
 }
 
 function totalTime(miles, charges) {
-const loadUnload = 2;
+const loadUnload = 1;
 const road = timeOnTheRoad(miles);
 const charge = chargeTime(charges);
 
