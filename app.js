@@ -86,11 +86,15 @@ const response = await fetch(url).then(r => r.json());
 const meters = response.routes[0].distance;
 return meters * 0.000621371;
 }
-// methods
+// for get total if miles back where included it would increase the amount needed to be paid for
+// so for the time being it just to and to the pickup
 
 function getTotal(milesTo, milesBack, milesPickup) {
 return milesTo + milesPickup;
 }
+
+// needs to recharge every 180 miles so while the loop runs 
+// might not work for over 1000 miles due to height
 
 function chargeCount(miles) {
 let count = 0;
@@ -99,6 +103,8 @@ if (miles > i) count++;
 }
 return count;
 }
+// changable charge rate makes it easier to plan for changes
+// unless charges is 0 its just rate * the amount of charges
 
 function costForCharge(charges) {
 const rateForCharge = 50;
@@ -106,14 +112,22 @@ if (charges === 0) return 0;
 return rateForCharge * charges;
 }
 
+// the estimatted cost per mile
+
 function costPerMile(miles) {
 return miles * 1.50;
 }
+
+// with no way to calculate a ever changing speed making a lower average makes it easier to calc
 
 function timeOnTheRoad(miles) {
 const averageSpeed = 65;
 return miles / averageSpeed;
 }
+
+// typical charge time is 45 but may be prone to change over time
+// taking the charges times the minutes gives the overall minutes
+// then dividing by 60 gives the hours with minutes as a decimal
 
 function chargeTime(charges) {
 const chargeTimeEstimate = 45;
@@ -122,14 +136,19 @@ if (charges === 0) return 0;
 
 return (charges * chargeTimeEstimate) / 60;
 }
+// the unload time is prone to change
+// just takes in every time and adds
 
 function totalTime(miles, charges) {
 const loadUnload = 1;
 const road = timeOnTheRoad(miles);
-const charge = chargeTime(charges);
+const chargeTime = chargeTime(charges);
 
-return road + loadUnload + charge;
+return road + loadUnload + chargeTime;
 }
+// the cpotential cost for the driver
+// takes the charges and hours in total along with the
+// standard $ 1.5 per mile and if the hourly rate is there adds that
 
 function driverCost(chargeCost, miles) {
   const charges = chargeCount(miles);
