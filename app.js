@@ -97,10 +97,8 @@ return milesTo + milesPickup;
 // might not work for over 1000 miles due to height
 
 function chargeCount(miles) {
-let count = 0;
-for (let i = 180; i < 1000; i += 180) {
-if (miles > i) count++;
-}
+const maxMiles=180
+let count = miles/maxMiles
 return count;
 }
 // changable charge rate makes it easier to plan for changes
@@ -156,14 +154,7 @@ function driverCost(chargeCost, miles) {
 
   const mileCost = costPerMile(miles);
 
-  const rateElement = document.getElementById("hourlyRate");
-  const rate = rateElement ? rateElement.checked : false;
-
-  if (rate) {
-  return  (hours * 26) + 26;
-  } else {
-  return chargeCost + 26;
-  }
+  return  (hours * 26);
 }
 
 function profitAmountNeeded(driver) {
@@ -221,10 +212,16 @@ const twoDollarRate=noReturnMiles*2;
 const charges = chargeCount(totalMiles);
 const chargeCost = costForCharge(charges);
 
-const driver = driverCost(chargeCost, noReturnMiles);
+const rateElement = document.getElementById("hourlyRate");
+const rate = rateElement ? rateElement.checked : false;
+let driver=0
+if (rate){ 
+   driver = driverCost(chargeCost, noReturnMiles);
+}
 const totalCosts= chargeCost+driver
 const result = profitAmountNeeded(totalCosts);
-
+  
+const driverLine = rate ? `Driver Costs: $${driver.toFixed(2)}\n` : "";
 
 
 
@@ -240,9 +237,9 @@ Miles Without Return: ${noReturnMiles.toFixed(2)} miles
 1.5 Dollars Per Mile: $${dollarHalfRate.toFixed(2)}
 2 Dollars Per Mile: $${twoDollarRate.toFixed(2)}
 
-Charges : ${charges}
+Charges : ${charges.toFixed(2)}
 Charge Costs : $${chargeCost.toFixed(2)}
-Driver Costs: $${driver.toFixed(2)}
+${driverLine}
 
 Total Costs: $${totalCosts.toFixed(2)}
 
