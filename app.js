@@ -142,9 +142,9 @@ return (charges * chargeTimeEstimate) / 60;
 function totalTime(miles, charges) {
 const loadUnload = 1;
 const road = timeOnTheRoad(miles);
-const chargeTime = chargeTime(charges);
+const chargingTime = chargeTime(charges);
 
-return road + loadUnload + chargeTime;
+return road + loadUnload + chargingTime;
 }
 // the cpotential cost for the driver
 // takes the charges and hours in total along with the
