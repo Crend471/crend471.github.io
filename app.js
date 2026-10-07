@@ -154,7 +154,7 @@ function driverCost(chargeCost, miles) {
 
   const mileCost = costPerMile(miles);
 
-  return  (hours * 26);
+  return  (hours * 26) + 26;
 }
 
 function profitAmountNeeded(driver) {
